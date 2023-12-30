@@ -1,0 +1,36 @@
+name: Docker Compose Pull and Up
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-compose-pull-up:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
+    - name: Log in to Docker Hub (if needed)
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Pull Docker images using docker-compose
+      run: |
+        docker-compose pull prereqs node-server envoy commonjs-client
+
+    - name: Set up environment variables (if needed)
+      run: |
+        echo "CUSTOM_VARIABLE=value" >> .env
+
+    - name: Start Docker containers in detached mode
+      run: |
+        docker-compose up -d node-server envoy commonjs-client
+
+    # Additional steps or jobs can be added as needed
