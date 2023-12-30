@@ -27,7 +27,7 @@ jobs:
 
     - name: Set up environment variables (if needed)
       run: |
-        echo "CUSTOM_VARIABLE=value" >> .env
+        echo "#empty-demo" >> .env
 
     - name: Start Docker containers in detached mode
       run: |
