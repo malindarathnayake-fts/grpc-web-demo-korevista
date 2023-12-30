@@ -1,9 +1,8 @@
-name: Docker Compose Pull and Up
-
+name: docker-compose-demo
 on:
   push:
     branches:
-      - main
+      - *
 
 jobs:
   docker-compose-pull-up:
